@@ -1,0 +1,66 @@
+{
+  "id" : 1,
+  "title" : "Bertha",
+  "artist" : "The Grateful Dead",
+  "timing" : {
+    "upper" : 4,
+    "lower" : 4
+  },
+  "key" : "C",
+  "duration" : 42,
+  "phrases" : [ {
+    "id" : 10,
+    "bars" : 1,
+    "note" : "G C/G",
+    "repeat" : 1,
+    "lyric" : "[Intro]"
+  }, {
+    "id" : 11,
+    "bars" : 1,
+    "note" : "G C/G",
+    "repeat" : 8,
+    "lyric" : null
+  }, {
+    "id" : 12,
+    "bars" : 1,
+    "note" : "C",
+    "repeat" : null,
+    "lyric" : "I had a hard run"
+  }, {
+    "id" : 13,
+    "bars" : 1,
+    "note" : null,
+    "repeat" : null,
+    "lyric" : null
+  }, {
+    "id" : 14,
+    "bars" : 0.75,
+    "note" : "C",
+    "repeat" : null,
+    "lyric" : "runnin' from your"
+  }, {
+    "id" : 15,
+    "bars" : 0.25,
+    "note" : "G C/G",
+    "repeat" : null,
+    "lyric" : "window"
+  }, {
+    "id" : 16,
+    "bars" : 1,
+    "note" : null,
+    "repeat" : null,
+    "lyric" : null
+  }, {
+    "id" : 17,
+    "bars" : 1.75,
+    "note" : "C",
+    "repeat" : null,
+    "lyric" : "I was all night running, running, running"
+  }, {
+    "id" : 18,
+    "bars" : 1,
+    "note" : "G C/G",
+    "repeat" : null,
+    "lyric" : "Lord, I wonder if you care?"
+  } ]
+}
