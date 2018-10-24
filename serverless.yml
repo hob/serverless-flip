@@ -17,9 +17,25 @@ service: flip
 # Check out our docs for more details
 # frameworkVersion: "=X.X.X"
 
-provider:
+provider: 
   name: aws
   runtime: go1.x
+  region: us-east-1
+  environment: 
+    SONGS_TABLE: flip-songs
+  iamRoleStatements:
+    - Effect: Allow
+      Action: 
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: [
+      "arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.SONGS_TABLE}"
+      ]
+
 
 # you can overwrite defaults here
 #  stage: dev
@@ -58,6 +74,12 @@ functions:
       - http:
           path: /flip
           method: get
+  createSong:
+    handler: bin/createSong
+    events:
+      - http:
+          path: /createSong
+          method: post
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
@@ -94,8 +116,24 @@ functions:
 #      variable2: value2
 
 # you can add CloudFormation resource templates here
-#resources:
-#  Resources:
+resources:
+  Resources:
+    songsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:provider.environment.SONGS_TABLE} 
+        AttributeDefinitions:
+          - AttributeName: uuid
+            AttributeType: S
+        KeySchema:
+          - AttributeName: uuid
+            KeyType: HASH
+        TimeToLiveSpecification:
+          AttributeName: expirationTime
+          Enabled: true
+        ProvisionedThroughput:
+          ReadCapacityUnits: 10
+          WriteCapacityUnits: 10
 #    NewResource:
 #      Type: AWS::S3::Bucket
 #      Properties:
