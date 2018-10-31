@@ -4,7 +4,6 @@ import (
 	"context"
 
 	"encoding/json"
-	"io/ioutil"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
@@ -17,11 +16,11 @@ func main() {
 }
 
 func Handler(context context.Context, request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-	body, _ := ioutil.ReadAll(request.Body)
+	
 	var song models.Song
-	json.Unmarshal(body, &song)
+	json.Unmarshal([]byte(request.Body), &song)
 	persister := songs.DynamoPersister{}
-	persister.CreateSong(song)
+	persister.CreateSongInDB(song)
 	return events.APIGatewayProxyResponse{
 		StatusCode: 200,
 		Body:       request.Body,

@@ -5,8 +5,8 @@ import (
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 	"rak.dettelback/flip/pkg/models"
-	"rak.dettelback/flip/internal/system"
-	"github.com/aws/aws-sdk-go/service/dynamodbattribute"
+	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
+	"os"
 )
 
 type Persister interface {
@@ -24,9 +24,11 @@ func (p *DynamoPersister) CreateSongInDB(song models.Song) error {
 		return err
 	}
 	client := dynamodb.New(sess)
+	marshalled,err:=dynamodbattribute.MarshalMap(song)
+	songsTableName:=os.Getenv("SONGS_TABLE")
 	_, err = client.PutItem(&dynamodb.PutItemInput{
-		TableName: &system.SongsTable,
-		Item:dynamodbattribute.MarshalMap(song)
+		TableName: &songsTableName,
+		Item:marshalled,
 	})
 	if err != nil {
 		return err
